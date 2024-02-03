@@ -2,24 +2,24 @@ import mongoose from "mongoose";
 
 const Schema = new mongoose.Schema(
   {
-    fullname: {
-      type: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
-    email: {
+    title: {
       type: String,
-      required: true,
-      unique: true,
     },
-    password: {
+    description: {
       type: String,
-      required: true,
     },
-    status: {
-      type: String,
-      enum: ["active", "inactive"],
-      default: "active",
-      required: true,
+    questions: {
+      type: Array,
+    },
+    invites: {
+      type: Array, // ['a@kev.com', 'b@kev.com']
+    },
+    public: {
+      type: Boolean, // true = public, false = private
     },
     createdAt: {
       type: Number,
@@ -35,4 +35,4 @@ const Schema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("User", Schema);
+export default mongoose.model("Form", Schema);

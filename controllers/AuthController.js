@@ -80,8 +80,8 @@ class AuthController {
       }
 
       let payload = { id: user._id };
-      const accessToken = await generateAccessToken({ payload });
-      const refreshToken = await generateRefreshToken({ payload });
+      const accessToken = await generateAccessToken(payload);
+      const refreshToken = await generateRefreshToken(payload);
 
       return res.status(200).json({
         status: true,
