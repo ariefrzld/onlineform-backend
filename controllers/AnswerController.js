@@ -3,6 +3,8 @@ import Form from "../models/Form.js";
 import Answer from "../models/Answer.js";
 import answerDuplicate from "../libraries/answerDupllicate.js";
 import questionRequiredButEmpty from "../libraries/questionRequiredButEmpty.js";
+import optionValueNotExist from "../libraries/optionValueNotExist.js";
+import questionIdNotValid from "../libraries/questionIdNotValid.js";
 
 class AnswerController {
   async store(req, res) {
@@ -26,6 +28,16 @@ class AnswerController {
         throw { code: 400, message: "QUESTION_REQUIRED_BUT_EMPTY" };
       }
 
+      const optionNotExist = await optionValueNotExist(form, req.body.answers);
+      if (optionNotExist.length > 0) {
+        throw { code: 400, message: "OPTION_VALUE_IS_NOT_EXIST", question: optionNotExist[0].question };
+      }
+
+      const questionNotExist = await questionIdNotValid(form, req.body.answers);
+      if (questionNotExist.length > 0) {
+        throw { code: 400, message: "QUESTION_IS_NOT_EXIST", question: questionNotExist[0].question };
+      }
+
       let fields = {};
       req.body.answers.forEach((answer) => {
         fields[answer.questionId] = answer.value;
@@ -45,6 +57,7 @@ class AnswerController {
       return res.status(error.code || 500).json({
         status: false,
         message: error.message,
+        question: error.question || null,
       });
     }
   }
