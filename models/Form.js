@@ -39,10 +39,4 @@ const Schema = new mongoose.Schema(
 
 Schema.plugin(mongoosePaginate);
 
-Schema.virtual("answers", {
-  ref: "Answer", // model yang direlasikan
-  localField: "_id", // id model form
-  foreignField: "formId", //id model Answer
-});
-
 export default mongoose.model("Form", Schema);

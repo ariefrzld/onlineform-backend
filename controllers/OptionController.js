@@ -30,7 +30,7 @@ class OptionController {
 
       //update form
       const question = await Form.findOneAndUpdate(
-        { _id: req.params.id, userId: req.JWT.id },
+        { _id: req.params.id, userId: req.jwt.id },
         { $push: { "questions.$[inner].options": option } },
         {
           arrayFilters: [{ "inner.id": new mongoose.Types.ObjectId(req.params.questionId) }],
@@ -102,8 +102,6 @@ class OptionController {
         status: false,
         message: err.message,
       });
-
-      console.log(err);
     }
   }
 
@@ -131,7 +129,7 @@ class OptionController {
       }
 
       const question = await Form.findOneAndUpdate(
-        { _id: req.params.id, userId: req.JWT.id },
+        { _id: req.params.id, userId: req.jwt.id },
         {
           $pull: {
             "questions.$[indexQuestion].options": { id: new mongoose.Types.ObjectId(req.params.optionId) },
@@ -150,8 +148,6 @@ class OptionController {
       if (!question) {
         throw { code: 500, message: "DELETE_OPTIONS_FAILED" };
       }
-
-      console.log(question);
 
       res.status(200).json({
         status: true,
