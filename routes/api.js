@@ -13,7 +13,7 @@ const router = express.Router();
 //Auth
 router.post("/register", AuthController.register);
 router.post("/login", AuthController.login);
-router.post("/refresh-token", jwtAuth(), AuthController.refreshToken);
+router.post("/refresh-token", AuthController.refreshToken);
 
 // Forms
 router.get("/forms", jwtAuth(), FormController.index);

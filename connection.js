@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const env = dotenv.config().parsed;
 
